@@ -7,3 +7,4 @@
 - Rodrigo Calle Galdos
 - Daniel Santillán Ávila
 - Carlos Izarra Ticlla
+- Josias Olaya Chauca
