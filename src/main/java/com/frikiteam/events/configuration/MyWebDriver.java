@@ -18,7 +18,6 @@ public class MyWebDriver {
             System.setProperty("webdriver.chrome.driver", pathDriver);
             webDriver = new ChromeDriver();
 
-            // Carga la pagina
             webDriver.get(urlPage);
 
             // --Maximiza la ventana
