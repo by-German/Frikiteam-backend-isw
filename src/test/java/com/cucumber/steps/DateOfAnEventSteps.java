@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DateOfAnEventSteps {
-    private final String url = "http://localhost:8080/api/";
+    private final String url = "http://localhost:8080/frikiteam-backend/api/";
     private final RestTemplate restTemplate = new RestTemplate();
     EventInformationResource event = new EventInformationResource();
 
