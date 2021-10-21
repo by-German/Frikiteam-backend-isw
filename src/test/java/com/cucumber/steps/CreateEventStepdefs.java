@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 public class CreateEventStepdefs {
     //webDriver.findElement(By.xpath(""))
     String Path = System.getProperty("user.dir");
-    public  WebDriver webDriver = MyWebDriver.getWebDriver();
+    public WebDriver webDriver = MyWebDriver.getWebDriver();
 
     @Given("que el usuario quiere crear un evento")
     public void queElUsuarioQuiereCrearUnEvento() {
@@ -21,7 +21,7 @@ public class CreateEventStepdefs {
         webDriver.findElement(By.xpath("//*[@id=\"mat-input-2\"]")).sendKeys("contraseña123");
         webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-login/div/form/button")).click();
         try {
-            Thread.sleep(1*1000);
+            Thread.sleep(1 * 1000);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -93,39 +93,9 @@ public class CreateEventStepdefs {
 
         try {
             //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        // agregamos itinarario
-        webDriver.findElement(By.xpath("//*[@id=\"mat-input-7\"]")).sendKeys("123");
-
-        // agregamos información detallada
-        webDriver.findElement(By.xpath("//*[@id=\"mat-input-8\"]")).sendKeys("Tamales");
-        webDriver.findElement(By.xpath("//*[@id=\"mat-input-9\"]")).sendKeys("Se venden tamales, recien salidos del horno");
-        webDriver.findElement(By.xpath("//*[@id=\"input-img\"]")).sendKeys(Path + "/images/tamales.jpeg");
-        webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-create-event/mat-drawer-container/mat-drawer-content/div/div/app-detailed-information/div/form[2]/button[2]")).click();
-
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        webDriver.findElement(By.xpath("//*[@id=\"mat-input-10\"]")).sendKeys("tamales-tamaleros01.com");
-        webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-create-event/mat-drawer-container/mat-drawer-content/div/div/app-optional-information/div/form/button")).click();
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(3000);
+            Thread.sleep(15000);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
-    @Then("el evento es guardado en la base de datos.")
-    public void elEventoEsGuardadoEnLaBaseDeDatos() {
-    }
-
 }
