@@ -14,7 +14,7 @@ public class MyWebDriver {
             String urlPage = "https://frikiteam.netlify.app/";
             // Establece el chrome driver
             //WebDriver webDriver;
-            String pathDriver = System.getProperty("user.dir") + "/driver/chromedriver_94.exe";
+            String pathDriver = System.getProperty("user.dir") + "/driver/chromedriver_95.exe";
             System.setProperty("webdriver.chrome.driver", pathDriver);
             webDriver = new ChromeDriver();
 

@@ -32,7 +32,7 @@ public class CreateEventStepdefs {
 
 
         webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-toolbar/button[4]")).click();
-        webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-create/mat-drawer-container/mat-drawer-content/button")).click();
+        //webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-create/mat-drawer-container/mat-drawer-content/button")).click();
 
         // Aqui enviamos el titulo del evento
         WebElement inputTitle = webDriver.findElement(By.xpath("//*[@id=\"mat-input-1\"]"));
@@ -99,12 +99,20 @@ public class CreateEventStepdefs {
     public void elEventoEsGuardadoEnLaBaseDeDatos() {
         //webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-create-event/mat-drawer-container/mat-drawer-content/div/div/app-general-information/div/form/button")).click();
         String urlPage = "https://frikiteam.netlify.app/";
+        webDriver.findElement(By.xpath("/html/body/app-root/app-nav-bar/mat-sidenav-container/mat-sidenav-content/main/app-create-event/mat-drawer-container/mat-drawer-content/div/div/app-general-information/div/form/button")).click();
+
+        try {
+            //Ponemos a "Dormir" el programa durante los ms que queremos
+            Thread.sleep(15000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         try {
             //Ponemos a "Dormir" el programa durante los ms que queremos
             Thread.sleep(1000);
         } catch (Exception e) {
             System.out.println(e);
         }
-        webDriver.get(urlPage);
+        //webDriver.get(urlPage);
     }
 }
