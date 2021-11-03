@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
 
 public class SearchByEventNameSteps {
-    private final String url = "http://localhost:8080/api/";
+    private final String url = "http://localhost:8080/frikiteam-backend/api/";
     private final RestTemplate restTemplate = new RestTemplate();
     private String name;
     private EventResource[] events;

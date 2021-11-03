@@ -6,7 +6,7 @@ pipeline {
     }
 	
     stages {
-        stage ('Compile Stage 2021-3') {
+        stage ('Compile Stage') {
 
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
@@ -25,22 +25,22 @@ pipeline {
         }
 
 
-        stage ('package Stage') {
+        stage ('Package Stage') {
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
                     bat 'mvn package'
                 }
             }
         }
-		/* // Descomentar cuando se tenga instalado en Tomcat
-		stage('Deploy tomcat') {
+
+		stage('Deploy Tomcat') {
             steps {
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} direcion ${env.WORKSPACE}"	
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} direction ${env.WORKSPACE}"
                 withMaven(maven : 'MAVEN_3_6_3') {
-					bat '"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe" -T ".\\target\\sistema-ventas-spring.war" "http://tomcat:tomcat@localhost:9090/manager/text/deploy?path=/sistema-ventas-spring&update=true"'
-                } 
+					bat '"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe" -T ".\\target\\frikiteam-backend.war" "http://deployer:deployer@localhost:9090/manager/text/deploy?path=/frikiteam-backend&update=true"'
+                }
             }
-        }*/
+        }
 
     }
 }
