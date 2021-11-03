@@ -32,4 +32,15 @@ public class EventCommentsController {
         return mapper.map(commentService.createComment(eventId, id, comment), CommentResource.class);
     }
 
+    @GetMapping("/comments")
+    @Operation(summary = "Get all Comments by Event Id, in pages", tags = {"events-comments"})
+    public Page<CommentResource> getAllCommentsByEventId(@PathVariable Long eventId, Pageable pageable) {
+        Page<Comment> commentPage = commentService.getAllCommentsByEventId(eventId, pageable);
+        List<CommentResource> resources = commentPage.getContent()
+                .stream()
+                .map(comment -> mapper.map(comment, CommentResource.class))
+                .collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
+    }
+
 }
