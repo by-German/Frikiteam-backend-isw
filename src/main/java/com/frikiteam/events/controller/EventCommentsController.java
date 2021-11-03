@@ -23,25 +23,13 @@ public class EventCommentsController {
     @Autowired
     private ModelMapper mapper;
 
-    @GetMapping("/comments")
-    @Operation(summary = "Get all Comments by Event Id, in pages", tags = {"events-comments"})
-    public Page<CommentResource> getAllCommentsByEventId(@PathVariable Long eventId, Pageable pageable) {
-        Page<Comment> commentPage = commentService.getAllCommentsByEventId(eventId, pageable);
-        List<CommentResource> resources = commentPage.getContent()
-                .stream()
-                .map(comment -> mapper.map(comment, CommentResource.class))
-                .collect(Collectors.toList());
-        return new PageImpl<>(resources, pageable, resources.size());
-    }
-
-    @PostMapping("users/{userId}/comments")
+    @PostMapping("users/{id}/comments")
     @Operation(summary = "Create a comment for a event", tags = "events-comments")
     public CommentResource createComment
-            (@PathVariable Long eventId, @PathVariable Long userId, SaveCommentResource resource) {
+            (@PathVariable Long eventId, @PathVariable Long id, SaveCommentResource resource) {
 
         Comment comment = mapper.map(resource, Comment.class);
-        return mapper.map(commentService.createComment(eventId, userId, comment), CommentResource.class);
+        return mapper.map(commentService.createComment(eventId, id, comment), CommentResource.class);
     }
-
 
 }
