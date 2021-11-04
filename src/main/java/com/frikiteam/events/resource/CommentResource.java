@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CommentResource {
     private Long id;
-    private Long userId;
+    private UserResource user;
     private String comment;
 }

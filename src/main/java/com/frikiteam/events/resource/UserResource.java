@@ -1,14 +1,24 @@
 package com.frikiteam.events.resource;
 
+import lombok.Data;
+
+@Data
 public class UserResource {
-    private String username;
+    private Long id;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String logo;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public UserResource setUsername(String username) {
-        this.username = username;
-        return this;
-    }
+//
+//    private String username;
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public UserResource setUsername(String username) {
+//        this.username = username;
+//        return this;
+//    }
 }
