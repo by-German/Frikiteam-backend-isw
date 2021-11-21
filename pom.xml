@@ -28,6 +28,9 @@
     <profiles>
         <profile>
             <id>jar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <packaging.type>jar</packaging.type>
                 <spring.profiles.active>dev</spring.profiles.active>
@@ -35,9 +38,6 @@
         </profile>
         <profile>
             <id>war</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <packaging.type>war</packaging.type>
                 <spring.profiles.active>ds</spring.profiles.active>
