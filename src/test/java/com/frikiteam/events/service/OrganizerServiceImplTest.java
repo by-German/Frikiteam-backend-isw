@@ -1,6 +1,8 @@
 package com.frikiteam.events.service;
 
+import com.frikiteam.events.domain.model.Customer;
 import com.frikiteam.events.domain.model.Organizer;
+import com.frikiteam.events.domain.model.Ticket;
 import com.frikiteam.events.domain.repositories.CustomerRepository;
 import com.frikiteam.events.domain.repositories.OrganizerRepository;
 import com.frikiteam.events.domain.service.OrganizerService;
@@ -12,9 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -171,5 +177,71 @@ class OrganizerServiceImplTest {
         assertThat(exception)
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
+    }
+
+    @Test
+    public void whenGetAllOrganizerThenReturnsOrganizers() {
+        // Arrange
+        List<Organizer> organizers = new ArrayList<>();
+        when(organizerRepository.findAll()).thenReturn(organizers);
+
+        // Act
+        Page<Organizer> results = organizerService.getAllOrganizers(null);
+
+        // Assert
+        assertThat(results);
+    }
+
+    @Test
+    public void whenGetAllByCustomerIdThenReturnsOrganizers() {
+        long customerId = 1;
+        Customer customer = new Customer();
+        customer.setId(customerId);
+        List<Organizer> organizers = new ArrayList<>();
+
+        customer.setOrganizers(organizers);
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+
+        Page<Organizer> results = organizerService.getAllByCustomerId(customerId, Pageable.unpaged());
+
+        assertThat(results);
+    }
+
+    @Test
+    public void whenAssignCustomerThenReturnOrganizer() {
+        long organizerId = 1;
+        Organizer organizer = new Organizer();
+        organizer.setId(organizerId);
+
+        long customerId = 1;
+        Customer customer = new Customer();
+        customer.setId(customerId);
+
+        when(organizerRepository.findById(organizerId)).thenReturn(Optional.of(organizer));
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+        when(customerRepository.save(customer)).thenReturn(customer);
+
+        organizer = organizerService.assignCustomer(customerId, organizerId);
+
+        assertThat(organizer);
+    }
+
+    @Test
+    public void whenUnnassignCustomerThenReturnOrganizer() {
+        long organizerId = 1;
+        Organizer organizer = new Organizer();
+        organizer.setId(organizerId);
+
+        long customerId = 1;
+        Customer customer = new Customer();
+        customer.setId(customerId);
+
+        when(organizerRepository.findById(organizerId)).thenReturn(Optional.of(organizer));
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+        when(customerRepository.save(customer)).thenReturn(customer);
+
+        organizer = organizerService.assignCustomer(customerId, organizerId);
+
+        assertThat(organizer);
     }
 }

@@ -20,6 +20,7 @@ import javax.swing.text.html.Option;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -386,4 +387,134 @@ class EventServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Resource Event not found for Id with value 1");
     }
+
+    @Test
+    public void whenSellTicketReturnEvent() {
+        long eventId = 1;
+        int quantity = 10;
+        Event event = new Event();
+        event.setQuantity(200);
+
+        when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
+        when(eventRepository.save(event)).thenReturn(event);
+
+        event = eventService.sellTicket(eventId, quantity);
+        assertThat(event);
+    }
+
+    @Test
+    public void whenAssignEventTagReturnEvent() {
+        long tagId = 1;
+        Tag tag = new Tag();
+
+        long eventId = 1;
+        Event event = new Event();
+
+        when(tagRepository.findById(tagId)).thenReturn(Optional.of(tag));
+        when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
+        when(eventRepository.save(event)).thenReturn(event);
+
+        event = eventService.assignEventTag(eventId, tagId);
+
+        assertThat(event);
+    }
+
+    @Test
+    public void whenGetAllEventByOrganizerIdReturnsEvents() {
+        long organizerId = 1;
+        Organizer organizer = new Organizer();
+        when(organizerRepository.findById(organizerId)).thenReturn(Optional.of(organizer));
+
+        Page<Event> events = eventService.getAllEventsByOrganizerId(organizerId, Pageable.unpaged());
+
+        assertThat(events);
+    }
+
+    @Test
+    public void whenGetEventByNameReturnEvents() {
+        String name = "my event";
+        List<Event> events = new ArrayList<>();
+
+        Event event = new Event();
+        event.setName("event");
+        events.add(event);
+
+        when(eventRepository.findByNameContaining(name)).thenReturn(events);
+
+        events = eventService.getEventByName(name);
+
+        assertThat(events);
+    }
+
+    @Test
+    public void whenGetAllEventsReturnEvents() {
+        List<Event> events = new ArrayList<>();
+        when(eventRepository.findAll()).thenReturn(events);
+
+        List<Event> results = eventService.getAllEvents();
+
+        assertThat(results).isEqualTo(events);
+    }
+
+    @Test
+    public void whenGetEventByIdReturnsEvent() {
+        long eventId = 1;
+        Event event = new Event();
+
+        when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
+
+        Event result = eventService.getEventById(eventId);
+
+        assertThat(result).isEqualTo(event);
+    }
+
+    @Test
+    public void whenGetAllEventsByCustomerIdReturnEvents() {
+        long customerId = 1;
+        Customer customer = new Customer();
+
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+
+        Page<Event> events = eventService.getAllEventsByCustomerId(customerId, Pageable.unpaged());
+
+        assertThat(events.getContent()).isEqualTo(customer.getEvents());
+    }
+
+    @Test
+    public void whenAssignCustomerEventReturnEvent() {
+        long eventId = 1;
+        Event event = new Event();
+        Customer customer = new Customer();
+        customer.setId(1L);
+        when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
+        when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
+        when(customerRepository.save(customer)).thenReturn(customer);
+
+        Event actual = eventService.assignCustomerEvent(customer.getId(), eventId);
+
+        assertThat(actual).isEqualTo(event);
+    }
+
+    @Test
+    public void whenDeleteEventReturnVoid() {
+        long eventId = 1;
+        eventRepository.deleteById(eventId);
+        eventService.deleteEvent(eventId);
+    }
+
+    @Test
+    public void whenUnnassignCustomerEvent() {
+        long eventId = 1;
+        Event event = new Event();
+        long customerId = 1;
+        Customer customer = new Customer();
+        when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+        when(customerRepository.save(customer)).thenReturn(customer);
+
+        Event actual = eventService.unnassignCustomerEvent(customerId, eventId);
+
+        assertThat(actual).isEqualTo(event);
+    }
+
 }
