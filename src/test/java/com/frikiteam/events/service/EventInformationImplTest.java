@@ -1,6 +1,7 @@
 package com.frikiteam.events.service;
 
 
+import com.frikiteam.events.domain.model.Event;
 import com.frikiteam.events.domain.model.EventInformation;
 import com.frikiteam.events.domain.model.Organizer;
 import com.frikiteam.events.domain.repositories.EventInformationRepository;
@@ -15,11 +16,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.swing.text.html.Option;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -185,6 +190,29 @@ public class EventInformationImplTest {
         assertThat(exception)
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
+    }
+
+    @Test
+    public void whenGetAllEventInformation() {
+        List<EventInformation> informations = new ArrayList<>();
+        when(eventInformationRepository.findAll()).thenReturn(informations);
+
+        ArrayList<EventInformation> results = eventInformationService.getAllEventInformation();
+
+        assertThat(results).isEqualTo(informations);
+    }
+
+    @Test
+    public void whenCreateEventInformation() {
+        long eventId = 1;
+        Event event = new Event();
+        EventInformation information = new EventInformation();
+
+        when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
+        when(eventInformationRepository.save(information)).thenReturn(information);
+
+        EventInformation actual = eventInformationService.saveEventInformation(information);
+        assertThat(actual).isEqualTo(information);
     }
 
 }
